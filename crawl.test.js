@@ -2,24 +2,31 @@ import { test, expect } from "@jest/globals"
 
 import { normalizeURL } from "./crawl.js"
 
-test('normalizeURLTest', () => {
-    const url1 = 'https://blog.boot.dev/path/' 
-    const url2 = 'https://blog.boot.dev/path'
-    const url3 = 'http://blog.boot.dev/path/'
-    const url4 = 'http://blog.boot.dev/path'
-    const wrongUrl1 = 'htp://blog.boot.dev/path'
-    const wrongUrl2 = 'htt://blog.boot.dev/path'
-    const wrongUrl3 = 'ttp://blog.boot.dev/path'
-    const wrongUrl4 = 'http//blog.boot.dev/path'
-    const wrongUrl5 = 'http:/blog.boot.dev/path'
-    const wrongUrl6 = 'http:blog.boot.dev/path'
-    const wrongUrl7 = '://blog.boot.dev/path'
-    const wrongUrl8 = '//blog.boot.dev/path'    
-    
-    const normalizedUrl = 'blog.boot.dev/path'
 
-    expect(normalizeURL(url1)).toBe(normalizedUrl)
-    expect(normalizeURL(url2)).toBe(normalizedUrl)
-    expect(normalizeURL(url3)).toBe(normalizedUrl)
-    expect(normalizeURL(url4)).toBe(normalizedUrl)
+describe('normalizeURL', () => {
+    test('should return normalized URL for a valid URL', () => {
+        expect(normalizeURL('http://blog.boot.dev/path/')).toBe('blog.boot.dev/path')
+        expect(normalizeURL('http://blog.boot.dev/path')).toBe('blog.boot.dev/path')
+        expect(normalizeURL('https://example.com/')).toBe('example.com')
+    })
+
+    test('should throw an error for an invalid URL', () => {
+        expect(() => normalizeURL('invalid-url')).toThrow('Invalid URL')
+        expect(() => normalizeURL('')).toThrow('Invalid URL')
+    })
+
+    test('should handle URLs without a trailing slash correctly', () => {
+        expect(normalizeURL('http://example.com')).toBe('example.com')
+    })
+
+    test('should handle URLs with multiple trailing slashes correctly', () => {
+        expect(normalizeURL('http://example.com///')).toBe('example.com')
+    })
+})
+
+
+describe('getURLfromHTML', () => {
+    test('', () => {
+
+    })
 })
