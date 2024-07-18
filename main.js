@@ -1,1 +1,5 @@
-console.log('helo')
+function main() {
+
+}
+
+main()

@@ -46,11 +46,15 @@ const getURLfromHTML = (htmlBody, baseURL) => {
      * @param baseURL: base URL string of the website being crawled
      * @return un-normalized array of all the URLs found within the HTML
      */
+    const dom = new JSDOM(htmlBody)
+    const links = dom.window.document.querySelectorAll('a[href]')
+    const URLs = Array.from(links).map(link => {
+        const url = new URL(link.getAttribute('href'), baseURL)
+        return url.href
+    })
 
-   
-    return []
-
-
+    return URLs
+    
 }
 
 export { normalizeURL, getURLfromHTML }
