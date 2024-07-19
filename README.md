@@ -5,8 +5,8 @@ Simple web crawler written in javascript with CLI interface
 ## How to use
 
 ```
-git clone 
-cd webScraper
+git clone https://github.com/niccolot/webCrawler
+cd webCrawler
 npm install # to install dependencies
 npm run start <url>
 ```
