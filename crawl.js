@@ -53,11 +53,9 @@ const getURLfromHTML = (htmlBody, baseURL) => {
     })
 
     return URLs
-    
 }
 
-
-const crawlPage = async (baseURL, currentURL = baseURL, pages = {}) => {
+const crawlPage = async (baseURL, verbose, currentURL = baseURL, pages = {}) => {
     /**
      * actual webcrawler
      * 
@@ -66,10 +64,13 @@ const crawlPage = async (baseURL, currentURL = baseURL, pages = {}) => {
      * containing the counts of each subdomain staring from the baseURL
      * 
      * @param baseURL: URL from where to start crawling
+     * @param verbose: whether to print to terminal the page that is being crawled
      * @param currentURl: URL in which the recursive function is crawling
      * @return pages: object containing the indexing of the site
      */
     try {
+        if(verbose) { console.log(`Crawling ${currentURL}`) }
+
         const baseURLObj = new URL(baseURL)
         const currentURLObj = new URL(currentURL)
         
@@ -90,7 +91,7 @@ const crawlPage = async (baseURL, currentURL = baseURL, pages = {}) => {
         const body = await parseHTML(currentURL)
         const URLs = getURLfromHTML(body, currentURL)
         for (const url of URLs){
-            pages = await crawlPageR(currentURL, url, pages)
+            pages = await crawlPage(currentURL, verbose, url, pages)
         }
 
         return pages
@@ -109,24 +110,15 @@ const parseHTML = async (url) => {
         const response = await fetch(url, {
             method: 'GET'
         })
-        /**
-        if(response.status >= 400) { throw new Error(`Error: status code ${response.status}`)}
         
-        const contentType = response.headers.get('content-type')
-        if(!contentType.startsWith('text/html')) { throw new Error('Error: content type is not text/html')} 
-         */
         if(response.status >= 400) { 
             console.log(`Error: status code ${response.status}`) 
             return
         }
         
         const contentType = response.headers.get('content-type')
-        if(!contentType.startsWith('text/html')) {
-            console.log('Error: content type is not text/html')
-            return
-        }
-        
-        
+        if(!contentType.startsWith('text/html')) { return }
+           
         const body = await response.text()
 
         return body
@@ -136,4 +128,4 @@ const parseHTML = async (url) => {
     }
 }
 
-export { normalizeURL, getURLfromHTML, crawlPage, crawlPageR }
+export { normalizeURL, getURLfromHTML, crawlPage }
