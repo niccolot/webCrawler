@@ -1,6 +1,6 @@
 # Javascript webcrawler
 
-Simple web crawler written in javascript
+Simple web crawler written in javascript with CLI interface
 
 ## How to use
 
@@ -30,7 +30,7 @@ Example:
 npm run start -- https://wagslane.dev 
 ```
 
-Will print to terminal a report listing the indexed pages
+Will print to terminal a report listing the indexed pages in descending order of frequency
 
 ```
 Report after crawling 'https://wagslane.dev':
