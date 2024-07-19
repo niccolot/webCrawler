@@ -2,7 +2,6 @@ import { test, expect } from "@jest/globals"
 
 import { normalizeURL, getURLfromHTML } from "./crawl.js"
 
-
 describe('normalizeURL', () => {
     test('should return normalized URL for a valid URL', () => {
         expect(normalizeURL('http://blog.boot.dev/path/')).toBe('blog.boot.dev/path')
@@ -24,7 +23,6 @@ describe('normalizeURL', () => {
         expect(normalizeURL('http://example.com///')).toBe('example.com')
     })
 })
-
 
 describe('getURLfromHTML', () => {
     const htmlString1 = '<html><body><a href="https://blog.boot.dev"><span>Go to Boot.dev</span></a></body></html>'
