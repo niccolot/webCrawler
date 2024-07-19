@@ -22,17 +22,14 @@ const normalizeURL = (urlStr) => {
         const parsedURL = new URL(urlStr, 'http://dummy-base')
         const scheme = parsedURL.protocol.slice(0, -1); // remove the trailing ":"
 
-        // Ensure scheme is valid
         if (!isValidScheme(scheme)) {
         throw new Error('Invalid URL scheme')
         }
 
-        // Check if authority is present when required
         if (!hasAuthority(urlStr.replace(scheme + ':', ''))) {
         throw new Error('Missing authority component')
         }
 
-        // If everything is fine, create the URL object again with the original string
         const urlObj = new URL(urlStr)
         return `${urlObj.hostname}${urlObj.pathname}`.replace(/\/+$/, '')    
     } catch (error) {
@@ -57,4 +54,24 @@ const getURLfromHTML = (htmlBody, baseURL) => {
     
 }
 
-export { normalizeURL, getURLfromHTML }
+const crawlPage = async (currentURL) => {
+    try {
+        const response = await fetch(currentURL, {
+            method: 'GET',
+        })
+
+        if(response.status >= 400) { throw new Error(`Error: status code ${response.status}`)}
+        
+        const contentType = response.headers.get('content-type')
+        if(!contentType.startsWith('text/html')) { throw new Error('Error: content type is not text/html')}
+        
+        const body = await response.text()
+        console.log(body)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export { normalizeURL, getURLfromHTML, crawlPage }
