@@ -8,7 +8,6 @@ Simple web crawler written in javascript with CLI interface
 git clone https://github.com/niccolot/webCrawler
 cd webCrawler
 npm install # to install dependencies
-npm run start <url>
 ```
 
 ```
