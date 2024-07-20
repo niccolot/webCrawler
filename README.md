@@ -74,4 +74,4 @@ Report succesfully saved as crawlReport_wagslane.dev.json
 npm run start -- https://wagslane.dev --save
 ```
 
-Will print and save the report as json file
+Will print the report, create a 'reports' folder in the root project and save the report as json file inside the folder

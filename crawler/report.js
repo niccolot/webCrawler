@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { writeFile } from 'fs/promises'
 
 import { normalizeURL } from './crawl.js'
@@ -24,7 +25,11 @@ const printReport = async (baseURL,
         const jsonString = JSON.stringify(pages, null, 2)
         try {
             const reportName = `crawlReport_${normalizeURL(baseURL)}.json`
-            await writeFile(reportName, jsonString)
+            if(!fs.existsSync('reports/')){
+                fs.mkdirSync('reports/')
+            }
+            const path = `reports/${reportName}`
+            await writeFile(path, jsonString)
             console.log(`\nReport succesfully saved as ${reportName}`)
         } catch (error) {
             console.log(`\nError saving report: ${error}`)

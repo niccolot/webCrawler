@@ -1,7 +1,7 @@
 import minimist from "minimist"
 
-import { crawlPage } from "./crawl.js"
-import { printReport } from "./report.js"
+import { crawlPage } from "./crawler/crawl.js"
+import { printReport } from "./crawler/report.js"
 
 const helpMessage = `
 Usage: npm run start -- <url> [options]
